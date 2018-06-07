@@ -22,6 +22,7 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 /** External module **/
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -86,6 +87,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     NgxPaginationModule,
     BsModalModule,
     MomentModule,
