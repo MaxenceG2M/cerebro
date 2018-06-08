@@ -17,7 +17,7 @@
  */
 
 import { Injectable }                                               from '@angular/core';
-import { Response, URLSearchParams } from '@angular/http';
+import { Response } from '@angular/http';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { _throw } from 'rxjs/observable/throw';
@@ -34,7 +34,7 @@ const headers = new HttpHeaders({
     'Content-Type': 'application/json'
 })
 
-const options = {
+const headerOptions = {
     headers: headers
 };
 
@@ -76,13 +76,9 @@ export class AlarmService {
     }
 
     addAlarm(newAlarm: Alarm) {
-        console.log('addAlarm');
-        console.log(newAlarm);
         let body = JSON.stringify(newAlarm);
 
-        const options1 = { headers, responseType: 'text' as 'text'}
-
-        return this.http.post(this.alarmAddUrl, body, options1)
+        return this.http.post(this.alarmAddUrl, body, { headers, responseType: 'text' as 'text'})
             .pipe(
                 catchError(this.handleError)
             );
@@ -91,23 +87,26 @@ export class AlarmService {
    updateAlarm(alarm: Alarm) {
         let body = JSON.stringify(alarm);
 
-        return this.http.put(this.alarmUpdateUrl, body, options)
+        return this.http.put(this.alarmUpdateUrl, body, { headers, responseType: 'text' as 'text'})
             .pipe(
                 catchError(this.handleError)
             );
     }
 
     addSubscription(subscription: Subscription, alarmId: string) {
+      console.log('addSubscription');
       let body = JSON.stringify(subscription);
 
-      return this.http.post(this.remoteRootUrl + "/alarms/" + alarmId + "/subscriptions", body, options)
+      return this.http.post(this.remoteRootUrl + "/alarms/" + alarmId + "/subscriptions", body, headerOptions)
         .pipe(
             catchError(this.handleError)
         );
     }
 
     deleteSubscription(alarm: Alarm, subscription: Subscription) {
-        return this.http.delete(this.remoteRootUrl + "/alarms/" + alarm.id + "/subscriptions/" + subscription.id)
+        console.log('add delete');
+        return this.http.delete(this.remoteRootUrl + "/alarms/" + alarm.id + "/subscriptions/" + subscription.id,
+                { headers, responseType: 'text' as 'text'})
             .pipe(
                 catchError(this.handleError)
             );
@@ -116,7 +115,7 @@ export class AlarmService {
     searchAlarm(alarm: Alarm): Observable<Alarm> {
         let body = JSON.stringify(alarm);
 
-        return this.http.post<Alarm>(this.alarmSearchUrl, body, options)
+        return this.http.post<Alarm>(this.alarmSearchUrl, body, headerOptions)
             .pipe(
                 catchError(this.handleError)
             );
@@ -125,7 +124,7 @@ export class AlarmService {
     searchSubscription(subscription: Subscription, alarmId: string) {
         let body = JSON.stringify(subscription);
 
-        return this.http.post(this.remoteRootUrl + "/alarms/" + alarmId + "/subscriptions/search", body, options)
+        return this.http.post(this.remoteRootUrl + "/alarms/" + alarmId + "/subscriptions/search", body, headerOptions)
             .pipe(
                 catchError(this.handleError)
             );
@@ -134,7 +133,7 @@ export class AlarmService {
     updateSubscription(subscription: Subscription, alarmId: string) {
       let body = JSON.stringify(subscription);
 
-      return this.http.put(this.remoteRootUrl + "/alarms/" + alarmId + "/subscriptions/" + subscription.id, body, options)
+      return this.http.put(this.remoteRootUrl + "/alarms/" + alarmId + "/subscriptions/" + subscription.id, body, headerOptions)
           .pipe(
               catchError(this.handleError)
             );
@@ -151,6 +150,7 @@ export class AlarmService {
     }
 
     private handleError(error: HttpErrorResponse) {
+        console.log("ERROR");
         console.log(error.error);
         if (error.error instanceof ErrorEvent) {
           // A client-side or network error occurred. Handle it accordingly.
