@@ -17,11 +17,12 @@
  */
 
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
+import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs/Observable";
 import {AppConfig} from "../app.config";
 import {Alert} from "./alert";
 import {Stat} from "../admin/stat";
+import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class AlertService {
@@ -31,35 +32,33 @@ export class AlertService {
     private statChangeUrl = "/alerts/stats/changes";
 
     constructor(
-      private http: Http,
+      private http: HttpClient,
       private config: AppConfig
     ) { }
 
     getAlerts(): Observable<Alert[]> { // get 20 alerts
-        return this.http.get(this.remoteRootUrl + this.allAlertsUrl)
-            .map(response => <Alert[]> response.json())
-            .catch(this.handleError);
+        return this.http.get<Alert[]>(this.remoteRootUrl + this.allAlertsUrl)
+        .pipe(
+            catchError(this.handleError)
+        );
     }
 
     getAlarmAlerts(id: string): Observable<Alert[]> {
-        return this.http.get(this.remoteRootUrl + "/alarms/" + id + this.allAlertsUrl)
-            .map(response => <Alert[]> response.json())
+        return this.http.get<Alert[]>(this.remoteRootUrl + "/alarms/" + id + this.allAlertsUrl)
             // .catch(this.handleError)
             ;
     }
 
     getStatAlertWithNoChange(from: string): Observable<Stat[]> {
-        return this.http.get(this.remoteRootUrl + this.statNoChangeUrl + "?from=" + from)
-            .map(response => <Stat[]> response.json())
-            .do(data => console.log(data)) // eyeball results in the console
+        return this.http.get<Stat[]>(this.remoteRootUrl + this.statNoChangeUrl + "?from=" + from)
+            // .do(data => console.log(data)) // eyeball results in the console
             // .catch(this.handleError)
             ;
     }
 
     getStatAlertWithChange(from: string): Observable<Stat[]> {
-        return this.http.get(this.remoteRootUrl + this.statChangeUrl + "?from=" + from)
-            .map(response => <Stat[]> response.json())
-            .do(data => console.log(data)) // eyeball results in the console
+        return this.http.get<Stat[]>(this.remoteRootUrl + this.statChangeUrl + "?from=" + from)
+            // .do(data => console.log(data)) // eyeball results in the console
             // .catch(this.handleError)
             ;
     }
