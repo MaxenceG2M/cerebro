@@ -17,7 +17,7 @@
  */
 
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Profile } from './profile';
 import {AppConfig} from "../../app.config";

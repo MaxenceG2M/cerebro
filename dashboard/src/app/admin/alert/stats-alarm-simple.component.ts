@@ -18,7 +18,7 @@
 
 import {Component, Input} from "@angular/core";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 
 import {Stat} from "../stat";
 

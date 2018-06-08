@@ -1,3 +1,5 @@
+
+import {throwError as observableThrowError,  Observable ,  throwError as _throw } from 'rxjs';
 /*
  * This file is part of the Cerebro distribution.
  * (https://github.com/voyages-sncf-technologies/cerebro)
@@ -19,8 +21,6 @@
 import { Injectable }                                               from '@angular/core';
 import { Response } from '@angular/http'; // TODO Remove it
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { _throw } from 'rxjs/observable/throw';
 
 import { AppConfig } from '../app.config';
 
@@ -143,10 +143,10 @@ export class AlarmService {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         if (errorResponse instanceof Response) {
-          return Observable.throw(errorResponse.json() as CerebroException || 'Server error');
+          return observableThrowError(errorResponse.json() as CerebroException || 'Server error');
         }
 
-        return Observable.throw(errorResponse || 'Server error');
+        return observableThrowError(errorResponse || 'Server error');
     }
 
     private handleError(error: HttpErrorResponse) {

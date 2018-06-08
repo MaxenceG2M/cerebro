@@ -1,3 +1,5 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 /*
  * This file is part of the Cerebro distribution.
  * (https://github.com/voyages-sncf-technologies/cerebro)
@@ -37,7 +39,6 @@
 import { Injectable }                                               from '@angular/core';
 import { Response } from '@angular/http'; // TODO remove it
 import { HttpClient } from '@angular/common/http';
-import { Observable }                                               from 'rxjs/Observable';
 
 import { AppConfig } from '../app.config';
 
@@ -66,9 +67,9 @@ export class DatasourceService {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         if (errorResponse instanceof Response) {
-          return Observable.throw(errorResponse.json() as CerebroException || 'Server error');
+          return observableThrowError(errorResponse.json() as CerebroException || 'Server error');
         }
 
-        return Observable.throw(errorResponse || 'Server error');
+        return observableThrowError(errorResponse || 'Server error');
     }
 }

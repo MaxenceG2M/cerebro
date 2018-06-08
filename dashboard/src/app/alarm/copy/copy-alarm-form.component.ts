@@ -18,7 +18,7 @@
 
 import {Component, EventEmitter, Input, Output, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Alarm }  from '../alarm';
 import {Subscription} from "../../subscription/subscription";
 import {AlarmService} from "../alarm.service";

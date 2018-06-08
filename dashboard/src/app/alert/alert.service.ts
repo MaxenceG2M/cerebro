@@ -16,9 +16,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {HttpClient} from '@angular/common/http';
-import {Observable} from "rxjs/Observable";
 import {AppConfig} from "../app.config";
 import {Alert} from "./alert";
 import {Stat} from "../admin/stat";
@@ -68,9 +69,9 @@ export class AlertService {
         // infrastructure
         // instead of just logging it to the console
         if (errorResponse instanceof Response) {
-            return Observable.throw(errorResponse.json() || 'Server error');
+            return observableThrowError(errorResponse.json() || 'Server error');
         }
 
-        return Observable.throw(errorResponse || 'Server error');
+        return observableThrowError(errorResponse || 'Server error');
     }
 }
