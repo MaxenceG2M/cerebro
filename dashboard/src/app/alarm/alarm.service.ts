@@ -30,11 +30,12 @@ import { Subscription }     from '../subscription/subscription';
 import { CerebroException } from '../common/error/cerebroException';
 import { catchError } from 'rxjs/operators';
 
-const options = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-    }),
+const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+})
 
+const options = {
+    headers: headers
 };
 
 @Injectable()
@@ -79,8 +80,9 @@ export class AlarmService {
         console.log(newAlarm);
         let body = JSON.stringify(newAlarm);
 
+        const options1 = { headers, responseType: 'text' as 'text'}
 
-        return this.http.post<string>(this.alarmAddUrl, body, options)
+        return this.http.post(this.alarmAddUrl, body, options1)
             .pipe(
                 catchError(this.handleError)
             );
