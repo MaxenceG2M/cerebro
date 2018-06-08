@@ -29,7 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BsModalModule }       from 'ng2-bs3-modal';
 import { MomentModule }        from 'angular2-moment';
 import { NouisliderModule }    from 'ng2-nouislider';
-import { ToastModule }         from 'ng2-toastr/ng2-toastr';
+import { ToastrModule }        from 'ngx-toastr';
 
 import { AppComponent }         from './app.component';
 
@@ -92,7 +92,7 @@ import { AppRoutingModule } from './app-routing.module';
     BsModalModule,
     MomentModule,
     NouisliderModule,
-    ToastModule.forRoot(),
+    ToastrModule.forRoot(),
     AppRoutingModule,
    ],
   declarations: [

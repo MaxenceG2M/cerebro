@@ -17,7 +17,7 @@
  */
 
 import { Component, ViewContainerRef } from '@angular/core';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { AuthService } from './common/auth/basic.auth.service';
 import { Profile } from './common/auth/profile';
@@ -41,12 +41,12 @@ export class AppComponent {
 
     constructor(
       private authService: AuthService,
-      public toastr: ToastsManager,
+      // public toastr: ToastsManager,
       vRef: ViewContainerRef,
       private config: AppConfig
     )
     {
-      this.toastr.setRootViewContainerRef(vRef);
+      // this.toastr.setRootViewContainerRef(vRef);
     }
 
     logout() {

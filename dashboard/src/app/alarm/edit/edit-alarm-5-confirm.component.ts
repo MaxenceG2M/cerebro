@@ -17,7 +17,7 @@
  */
 
 import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
-import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {ToastrService} from "ngx-toastr";
 import {Alarm} from "../alarm";
 import {AlarmService} from "../alarm.service";
 import {CerebroException} from "../../common/error/cerebroException";
@@ -47,7 +47,7 @@ export class EditAlarm5ConfirmComponent implements OnInit {
   constructor(
     private alarmService: AlarmService,
     private errorMappingService: ErrorMappingService,
-    private toastr: ToastsManager
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
