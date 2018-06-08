@@ -35,12 +35,14 @@
  */
 
 import { Injectable }                                               from '@angular/core';
-import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Response } from '@angular/http'; // TODO remove it
+import { HttpClient } from '@angular/common/http';
 import { Observable }                                               from 'rxjs/Observable';
 
 import { AppConfig } from '../app.config';
 
 import { CerebroException } from '../common/error/cerebroException';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DatasourceService {
@@ -49,15 +51,15 @@ export class DatasourceService {
     private datasourceLocationsUrl = this.remoteRootUrl + "/datasources/locations";
 
     constructor(
-      private http: Http,
+      private http: HttpClient,
       private config: AppConfig
     ) { }
 
     getLocations(): Observable<string[]> {
-        return this.http.get(this.datasourceLocationsUrl)
-            .map(response => <string[]> response.json())
-            .catch(this.handleError)
-            ;
+        return this.http.get<string[]>(this.datasourceLocationsUrl)
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     private handleError(errorResponse: any) {
