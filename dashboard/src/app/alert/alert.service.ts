@@ -17,13 +17,15 @@
  */
 
 
-import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {HttpClient} from '@angular/common/http';
+
+import {throwError as _throw, Observable} from 'rxjs';
+import {catchError} from "rxjs/operators";
+
 import {AppConfig} from "../app.config";
 import {Alert} from "./alert";
 import {Stat} from "../admin/stat";
-import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class AlertService {
@@ -69,9 +71,9 @@ export class AlertService {
         // infrastructure
         // instead of just logging it to the console
         if (errorResponse instanceof Response) {
-            return observableThrowError(errorResponse.json() || 'Server error');
+            return _throw(errorResponse.json() || 'Server error');
         }
 
-        return observableThrowError(errorResponse || 'Server error');
+        return _throw(errorResponse || 'Server error');
     }
 }
