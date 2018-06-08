@@ -43,22 +43,22 @@ services:
     # Need to have built the image, read the README.adoc
     build: .
 
-  cerebro-services:
-    image: openjdk:8-jdk
-    working_dir: /opt/cerebro-services
-    command: ["java", "-jar", "cerebro-services.jar", "--seyren.host=http://seyren:8080", "--graphite.sources[0].url=http://localhost:8081"]
-    ports:
-     - 8080:8080
-    links:
-      - seyren:seyren
-    volumes_from:
-      - cerebro-src
+  # cerebro-services:
+  #   image: openjdk:8-jdk
+  #   working_dir: /opt/cerebro-services
+  #   command: ["java", "-jar", "cerebro-services.jar", "--seyren.host=http://seyren:8080", "--graphite.sources[0].url=http://localhost:8081"]
+  #   ports:
+  #    - 8080:8080
+  #   links:
+  #     - seyren:seyren
+  #   volumes_from:
+  #     - cerebro-src
 
-  cerebro-dashboard:
-    image: httpd:2.4
-    ports:
-     - 80:80
-    volumes_from:
-     - cerebro-src
-    volumes:
-      - ./properties/httpd.conf:/usr/local/apache2/conf/httpd.conf
+  # cerebro-dashboard:
+  #   image: httpd:2.4
+  #   ports:
+  #    - 80:80
+  #   volumes_from:
+  #    - cerebro-src
+  #   volumes:
+  #     - ./properties/httpd.conf:/usr/local/apache2/conf/httpd.conf
